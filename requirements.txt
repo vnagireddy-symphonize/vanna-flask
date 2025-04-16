@@ -1,3 +1,4 @@
+flasgger
 flask
 vanna[snowflake]
 db-dtypes
