@@ -6,6 +6,7 @@ from flask import Flask, jsonify, Response, request, redirect, url_for
 import flask
 import os
 from cache import MemoryCache
+import db
 
 app = Flask(__name__, static_url_path='')
 
@@ -18,13 +19,7 @@ cache = MemoryCache()
 from vanna.remote import VannaDefault
 vn = VannaDefault(model=os.environ['VANNA_MODEL'], api_key=os.environ['VANNA_API_KEY'])
 
-vn.connect_to_snowflake(
-    account=os.environ['SNOWFLAKE_ACCOUNT'],
-    username=os.environ['SNOWFLAKE_USERNAME'],
-    password=os.environ['SNOWFLAKE_PASSWORD'],
-    database=os.environ['SNOWFLAKE_DATABASE'],
-    warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
-)
+db.connect(vn=vn)
 
 # NO NEED TO CHANGE ANYTHING BELOW THIS LINE
 def requires_cache(fields):
